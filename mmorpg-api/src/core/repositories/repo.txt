@@ -1,0 +1,173 @@
+from abc import ABC, abstractmethod
+from typing import Any, Optional, List, Iterable
+from pydantic import BaseModel, ConfigDict, UUID4
+
+# Player Model
+class PlayerIn(BaseModel):
+    """Model representing player input attributes."""
+    login: str
+    password: str
+
+
+class Player(PlayerIn):
+    """Model representing player attributes in the database."""
+    id: UUID4
+
+    model_config = ConfigDict(from_attributes=True, extra="ignore")
+
+
+class IPlayerRepository(ABC):
+    """An abstract repository class for players."""
+
+    @abstractmethod
+    async def add_player(self, player: PlayerIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def delete_player(self, player_id: UUID4) -> bool:
+        pass
+
+    @abstractmethod
+    async def update_player(self, player_id: UUID4, data: PlayerIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def get_by_id(self, player_id: UUID4) -> Any | None:
+        pass
+
+# Character Model
+class CharacterIn(BaseModel):
+    """Model representing character input attributes."""
+    name: str
+    level: int
+    player_id: UUID4
+
+
+class Character(CharacterIn):
+    """Model representing character attributes in the database."""
+    id: int
+
+    model_config = ConfigDict(from_attributes=True, extra="ignore")
+
+
+class ICharacterRepository(ABC):
+    """An abstract repository class for characters."""
+
+    @abstractmethod
+    async def add_character(self, character: CharacterIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def delete_character(self, character_id: int) -> bool:
+        pass
+
+    @abstractmethod
+    async def update_character(self, character_id: int, data: CharacterIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def get_by_id(self, character_id: int) -> Any | None:
+        pass
+
+# Item Model
+class ItemIn(BaseModel):
+    """Model representing item input attributes."""
+    name: str
+    description: Optional[str]
+    rarity: str
+
+
+class Item(ItemIn):
+    """Model representing item attributes in the database."""
+    id: int
+
+    model_config = ConfigDict(from_attributes=True, extra="ignore")
+
+
+class IItemRepository(ABC):
+    """An abstract repository class for items."""
+
+    @abstractmethod
+    async def add_item(self, item: ItemIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def delete_item(self, item_id: int) -> bool:
+        pass
+
+    @abstractmethod
+    async def update_item(self, item_id: int, data: ItemIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def get_by_id(self, item_id: int) -> Any | None:
+        pass
+
+# Inventory Model
+class InventoryIn(BaseModel):
+    """Model representing inventory input attributes."""
+    character_id: int
+    item_id: int
+    quantity: int
+
+
+class Inventory(InventoryIn):
+    """Model representing inventory attributes in the database."""
+    id: int
+
+    model_config = ConfigDict(from_attributes=True, extra="ignore")
+
+
+class IInventoryRepository(ABC):
+    """An abstract repository class for inventories."""
+
+    @abstractmethod
+    async def add_inventory(self, inventory: InventoryIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def delete_inventory(self, inventory_id: int) -> bool:
+        pass
+
+    @abstractmethod
+    async def update_inventory(self, inventory_id: int, data: InventoryIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def get_by_id(self, inventory_id: int) -> Any | None:
+        pass
+
+# Market Model
+class MarketIn(BaseModel):
+    """Model representing market input attributes."""
+    item_id: int
+    seller_id: UUID4
+    price: float
+    quantity: int
+
+
+class Market(MarketIn):
+    """Model representing market attributes in the database."""
+    id: int
+
+    model_config = ConfigDict(from_attributes=True, extra="ignore")
+
+
+class IMarketRepository(ABC):
+    """An abstract repository class for markets."""
+
+    @abstractmethod
+    async def add_market(self, market: MarketIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def delete_market(self, market_id: int) -> bool:
+        pass
+
+    @abstractmethod
+    async def update_market(self, market_id: int, data: MarketIn) -> Any | None:
+        pass
+
+    @abstractmethod
+    async def get_by_id(self, market_id: int) -> Any | None:
+        pass
