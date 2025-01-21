@@ -17,19 +17,22 @@ async def create_item(
     item: ItemIn,
     service: IItemService = Depends(Provide[Container.item_service]),
 ) -> dict:
-    """An endpoint for adding a new item.
-
+    """Add new item
     Args:
-        item (ItemIn): The item data.
-        service (IItemService, optional): The injected service dependency.
+        item (ItemIn): Item data.
+        service (IItemService): Item service
+
+    Raises:
+        HTTPException: If id is already used
 
     Returns:
-        dict: The new item attributes.
+        dict: Created item.
     """
-
-    new_item = await service.add_item(item)
-
-    return new_item.model_dump() if new_item else {}
+    try:
+        new_item = await service.add_item(item)
+        return new_item.model_dump() if new_item else {}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/all", response_model=Iterable[Item], status_code=200)

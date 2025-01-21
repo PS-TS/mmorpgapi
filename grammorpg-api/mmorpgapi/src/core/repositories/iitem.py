@@ -1,4 +1,4 @@
-"""Module containing item repository abstractions."""
+"""Abstrakcje repozytorium item"""
 
 from abc import ABC, abstractmethod
 from typing import Any, Iterable
@@ -7,68 +7,68 @@ from src.core.domain.item import ItemIn
 
 
 class IItemRepository(ABC):
-    """An abstract class representing protocol of item repository."""
+    """Abstrakcyjna klasa repozytoria item"""
 
     @abstractmethod
     async def get_item_by_id(self, item_id: int) -> Any | None:
-        """The abstract getting an item from the data storage.
+        """Abstrakcyjna metoda pobierania pozycji item po id
 
         Args:
-            item_id (int): The id of the item.
+            item_id (int): id itemu.
 
         Returns:
-            Any | None: The item data if exists.
+            Any | None: Item jeśli istnieje.
         """
 
     @abstractmethod
     async def get_all_items(self) -> Iterable[Any]:
-        """The abstract getting all items from the data storage.
+        """Abstrakcyjna metoda pobierania wszystkich item
 
         Returns:
-            Iterable[Any]: The collection of all items.
+            Iterable[Any]: Zwraca kolekcję wszystkich itemów
         """
 
     @abstractmethod
     async def get_item_by_name(self, name: str) -> Any | None:
-        """The abstract getting an item by name from the data storage.
+        """Abstrakcyjna metoda pobierania pozycji item po name
 
         Args:
-            name (str): The name of the item.
+            name (str): Nazwa itemu name
 
         Returns:
-            Any | None: The item data if exists.
+            Any | None: Item jeśli istnieje
         """
 
     @abstractmethod
     async def add_item(self, data: ItemIn) -> Any | None:
-        """The abstract adding a new item to the data storage.
+        """Abstrakcyjna metoda dodawania pozycji item
 
         Args:
-            data (ItemIn): The attributes of the item.
+            data (ItemIn): Atrybuty itemu
 
         Returns:
-            Any | None: The newly created item.
+            Any | None: Nowo utworzony item
         """
 
     @abstractmethod
     async def update_item(self, item_id: int, data: ItemIn) -> Any | None:
-        """The abstract updating item data in the data storage.
+        """Abstrakcyjna metoda aktualizacji pozycji item
 
         Args:
-            item_id (int): The item id.
-            data (ItemIn): The attributes of the item.
+            item_id (int): Id itemu
+            data (ItemIn): Atrybuty itemu
 
         Returns:
-            Any | None: The updated item.
+            Any | None: Nadpisany item
         """
 
     @abstractmethod
     async def delete_item(self, item_id: int) -> bool:
-        """The abstract removing an item from the data storage.
+        """Abstrakcyjna metoda usuwania pozycji item
 
         Args:
-            item_id (int): The item id.
+            item_id (int): ID itemu
 
         Returns:
-            bool: Success of the operation.
+            bool: Powodzenie operacji
         """

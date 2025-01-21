@@ -57,6 +57,18 @@ class ItemRepository(IItemRepository):
 
         return Item(**dict(item)) if item else None
 
+        async def item_exists(self, item_id: int) -> bool:
+        """Sprawdza, czy item istnieje po ID.
+
+        Args:
+            item_id (int): ID przedmiotu.
+
+        Returns:
+            bool: True istnieje; False nie.
+        """
+        query = item_table.select().where(item_table.c.id == item_id)
+        return await database.fetch_one(query) is not None
+
     async def add_item(self, data: ItemIn) -> Any | None:
         """The method adding a new item to the data storage.
 

@@ -42,8 +42,8 @@ class ItemService(IItemService):
 
         return await self._repository.get_all_items()
 
-    async def add_item(self, data: ItemIn) -> Item | None:
-        """The method adding a new item to the repository.
+        async def add_item(self, data: ItemIn) -> Item | None:
+        """The method adding a new item if id number is empty
 
         Args:
             data (ItemIn): The attributes of the item.
@@ -51,6 +51,8 @@ class ItemService(IItemService):
         Returns:
             Item | None: The newly created item.
         """
+        if await self._repository.item_exists(data.id):
+            raise ValueError(f"Item with ID {data.id} already exists.")
 
         return await self._repository.add_item(data)
 

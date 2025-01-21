@@ -1,11 +1,11 @@
+from pydantic import BaseModel, ConfigDict 
 
-from pydantic import BaseModel, ConfigDict  # type: ignore
 
-
-class ItemDTO(BaseModel):
-    """Model DTO dla itemu"""
+class InventoryDTO(BaseModel):
+    """Model DTO dla inventory"""
     id: int
-    name: str
+    money: int
+    itemlist: str
 
     model_config = ConfigDict(
         from_attributes=True,

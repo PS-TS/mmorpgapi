@@ -1,15 +1,15 @@
-"""Module containing location-related domain models."""
+"""Moduł zawierający logikę biznesową itemu."""
 
 from pydantic import BaseModel, ConfigDict
 
 
 class ItemIn(BaseModel):
-    """Model representing item's DTO attributes."""
+    """Wejściowy model itemu"""
     name: str
 
 
 class Item(ItemIn):
-    """Model representing item's attributes in the database."""
+    """Klasowy model itemu"""
     id: int
 
     model_config = ConfigDict(from_attributes=True, extra="ignore")
